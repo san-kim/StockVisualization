@@ -1,0 +1,50 @@
+1.Prediction of future values of the portfolio
+   1.Submit feasibility report
+2.Ability to add or remove stocks from the portfolio
+   1.Two ways of adding stocks:
+	1.Connect Pop up dialog to backend 
+	   1.Front end errors (missing fields)
+           2.Backend errors (valid ticker symbol)
+	2.Connect CSV file dialog to backend 
+	   1.File parsing service class for determining if CSV is malformed
+	   2.Tests for parsing service class
+	3.Acceptance tests for dialog error checking
+   2.Confirmation dialog when removing a stock
+3.Track and visualize changes in value over time of user’s portfolio 
+   1.Single graph must be displayed for the entire webapp 
+	1.Graph must be zoomable 
+	2.User can choose what unit of time to display on graph
+   2.Implement a single line representing portfolio value and individual lines for each viewed stock (each with a distinct color that corresponds with the ticker symbol in the viewed stocks list)
+   3.Show portfolio value
+	1.Current value
+	2.Percent change from day-to-day
+   4.Write feature files for graph
+4.View and compare the historical performance of a stock 
+   1.Stocks must be toggle-able for display on the graph
+   2.Users can specify start & end date for viewing a stock
+   3.Connect backend to portfolio list 
+   4.Connect backend to viewed stocks list 
+5.Works on the Chrome web browser and mobile devices 
+   1.Must resize responsively on mobile device view 
+6.The application must be secure and protect confidentiality of users’ data. 
+   1.User signed out under 120 seconds of inactivity 
+	1.Reset currently logged in user 
+   2.Only logged in users can access any functionality except for login page or account creation page 
+   3.All pages must only be accessible via SSL (https)
+7.Users must be able to create an account in the system 
+   1.Username must not be taken by another user 
+   2.Sign up page must have users input their password twice, error message must be displayed if the passwords do not match 
+   3.Update backend to have unique error codes for non unique username & passwords not matching 
+   4.Successful passwords should be hashed
+   5.Connect sign up to backend 
+   6.Refactor sign in to set currently signed in user as session attribute
+   7.Error messages should be displayed on the UI
+8.User interfaces must look modern and be attractive. 
+   1.Choose a better font for website
+9.Add acceptance tests for all error messages: including login, register, add stocks
+
+Meeting participants:
+Vikash Mody, Jamie Flores, Paul Kaster, Cathleen Yang, San Kim
+
+Paragraph:
+We chose these tasks to focus on for Sprint 3, because we gathered that features 3 & 4 were the features where we were most lacking in feedback from our stakeholders. We also believed that the graph is one of the most difficult portions to implement, and wanted to ensure that we were starting as soon as possible, to give us ample time for debugging and prototyping. Additionally, after getting feedback from the sprint review, we wanted to refactor and modify our existing implementation. Even more, after finding out more information about security and reliability requirements, we believe that these would be relatively easy to implement, and in the worst case scenario, could be pushed to the next sprint. Furthermore, we want to ensure we can receive as much feedback as possible with respect to the authentication--and, specifically, the sign up page--as well as tactical changes such as error messages on the frontend and backend. Though it may appear that we are tackling too many tasks this sprint, most of these tasks have been more or less implemented independently (as we have come from separate groups) and simply need to be connected together and tested as need be. Additionally, since this is the first time we will be working together as a team in this capacity, we believed it to be better to risk overshooting our capabilities rather than waste precious time as we begin to near the halfway point for this project as a whole. 

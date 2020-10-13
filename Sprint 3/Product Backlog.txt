@@ -1,0 +1,18 @@
+1.Prediction of future values of the portfolio 
+   1.Compare the historical performance of the stock and make predictions based on the performance.    2.Research feasibility of this feature and potentially submit a feasibility study. 2.Ability to add or remove stocks from the portfolio 
+   1.Two ways of adding stocks: 	1.Pop up dialog
+	2.CSV file 
+   2.Confirmation dialog when deleting a stock
+3.Track and visualize changes in value over time of user’s portfolio     1.Single graph must be displayed for the entire webapp  	1.Graph must be zoomable 
+	2.User can choose what unit of time to display on graph
+	3.All stocks must be toggleable for display on the graph    2.Implement a single line representing portfolio value and individual lines for each viewed stock (each with a distinct color that corresponds  with the ticker symbol in the viewed stocks list)    3.Show portfolio value
+	1.Current value
+	2.Percent change from day-to-day
+4.View and compare the historical performance of a stock 
+   1.Only want stocks listed on NASDAQ or NYSE
+   2.Maintain a list of viewed stocks 
+   3.Stocks must be toggleable for display on the graph
+   4.Users can specify start & end date for viewing a stock
+   5.Works on the Chrome web browser and mobile devices 
+5.Must resize responsively on mobile device view  6.The application must be secure and protect confidentiality of users’ data. 
+   1.Password must be hidden when users enters & must be hashed before saved into database     2.User signed out under 120 seconds of inactivity     3.Only logged in users can access any functionality except for login page or account creation page     4.All pages must only be accessible via SSL (https)    5.A button present on the UI must log out user and return to login screen 7.Users must be able to create an account in the system     1.Username must not be taken by another user     2.Sign up page must have users input their password twice, error message must be displayed if the passwords do not match  8.User interfaces must look modern and be attractive.     1.Top banner must be displayed on all pages with the title “USC CS 310: Stock Portfolio Management” 	1.Color code for grey background is #787878 (of banner)    2.Choose a better font for website 9.Must be implemented as a client-server based web application    1.Client side code must be written in html and javascript    2.Server side code must be written using java libraries 
