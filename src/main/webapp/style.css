@@ -70,8 +70,11 @@ input:focus {
 	border-radius: 4px;
 }
 #graph-container {
-	padding: 40px;
-	height: 400px;
+	padding-top: 20px;
+	padding-right: 30px;
+	padding-left: 30px;
+	padding-bottom: 30px;
+	height: 500px;
 	grid-column: 1 / 3;
 }
 #graph-container #portfolio-value {
@@ -81,6 +84,18 @@ input:focus {
 #graph-container #portfolio-value-change {
 	margin-top: 8px;
 }
+
+.graph-date {
+  text-align: right;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid #F5F5F5;
+  background-color: #F5F5F5;
+  font-size: 16px;
+  padding: 0 12px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 .container-header {
 	height: 68px;
 	border-bottom: 2px solid #E6E6E6;
