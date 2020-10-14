@@ -87,7 +87,7 @@
 		
 		<div id="logindiv">
 			<p id="loginp">Already have an account?</p>
-			<button id="loginbutton" onclick="location.href='login.jsp'">login</button>
+			<button id="loginbutton" onclick="location.href='signIn.jsp'">login</button>
 		</div>
 		
 		

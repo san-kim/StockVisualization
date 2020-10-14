@@ -25,7 +25,7 @@
 			<p id="usernametext" class="formobj">Username</p>
 			<input type="text" name="username" id="username" class="inputbar" value="">
 			<p id="passwordtext"class="formobj">Password</p>
-			<input type="password" name="password" id="pass" class="inputbar">
+			<input type="password" name="password" id="password" class="inputbar">
 			<p id="placeholder"><br></p>
 			<input type="submit" name="submit" class="formobj" value="login" id="loginbutton">
 		</form>
@@ -103,7 +103,7 @@
 			event.preventDefault();
 			
 			let userName = document.getElementById("username").value;
-			let pass = document.getElementById("pass").value;
+			let pass = document.getElementById("password").value;
 			
 			if(numFailed > 2){
 				document.getElementById("loginbutton").enabled = false;
