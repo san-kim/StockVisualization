@@ -17,6 +17,8 @@ import org.json.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import csci310.model.User;
+import csci310.service.CurrentSignedInUser;
 import csci310.service.DatabaseClient;
 import csci310.service.PasswordAuthentication;
 
@@ -41,8 +43,11 @@ public class LoginServlet extends HttpServlet {
 			String uname = jo.getString("username");
 			String password =jo.getString("password");
 			//Passes password and username into the database with the password authentication class to be hashed
+			//returned result is the userID as it's stored in the database
 			result = db.getUser(passAuth, uname, password);
 			System.out.println(result);
+			
+			User currentUser = null;
 			
 			//Username is incorrect
 			if(result == 0) {
@@ -52,11 +57,15 @@ public class LoginServlet extends HttpServlet {
 			else if(result >= 1) {
 				session.setAttribute("login", true);
 				session.setAttribute("loginID", uname);
+				currentUser = new User(uname, result);
+				CurrentSignedInUser.getInstance().signInCurrentUser(currentUser);
 			}
 			//Password is incorrect for user
 			else{
 				session.setAttribute("login", false);
 			}
+			// Will only be non null if the user has successfully logged in 
+			session.setAttribute("currentUser", currentUser);
 			try {
 				PrintWriter pw = response.getWriter();
 				pw.write("" + result);
