@@ -14,6 +14,7 @@ public class CurrentSignedInUserTest {
 	@Before
 	public void setUp() {
 		instance = CurrentSignedInUser.getInstance();
+		instance.signOutCurrentUser();
 	}
 
 	@Test 
