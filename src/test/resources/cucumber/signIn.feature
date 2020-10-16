@@ -18,21 +18,21 @@ Feature: Sign in Page
     When I enter an invalid username ""
     And I enter any password
     And I click submit on login
-    Then I should see the error "Please input a username of atleast 1 character"
+    Then I should see the error "Username cannot be empty."
     
   Scenario: Sign in with less than 8 char password
     Given I am on the sign in page
     When I enter an valid username "test1"
     And I enter an incorrect password "test"
     And I click submit on login
-    Then I should see the error "Please input a password of atleast 8 characters"
+    Then I should see the error "Please input a password of at least 8 characters"
     
   Scenario: Sign in with 0 char username and less than 8 char password
     Given I am on the sign in page
     When I enter an invalid username ""
     And I enter an incorrect password "test"
     And I click submit on login
-    Then I should see the error "Please input a username of atleast 1 character as well as a password of atleast 8 characters"
+    Then I should see the error "Username cannot be empty and password must be at least 8 characters"
     
   Scenario: Lock out after three unsuccessful attempts
     Given I am on the sign in page

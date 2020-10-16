@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -57,7 +58,7 @@ public class StepDefinitions {
 	
 	@When("I enter the correct password {string}")
 	public void i_enter_the_correct_password(String string) {
-		WebElement queryBox = driver.findElement(By.id("pass"));
+		WebElement queryBox = driver.findElement(By.id("password"));
 		queryBox.sendKeys(string);
 	}
 	
@@ -70,14 +71,15 @@ public class StepDefinitions {
 	
 	@When("I enter an incorrect password {string}")
 	public void i_enter_an_incorrect_password(String string) {
-		WebElement queryBox = driver.findElement(By.id("pass"));
+		WebElement queryBox = driver.findElement(By.id("password"));
 		queryBox.sendKeys(string);
 	}
 	@Then("I should see the error {string}")
 	public void i_should_see_the_error(String string) throws InterruptedException {
 		Thread.sleep(1000);
-		WebElement errorBox = driver.findElement(By.id("Merror"));
-		assertTrue(string.equalsIgnoreCase(errorBox.getText()));
+		WebElement errormessage = driver.findElement(By.id("errormessage"));
+		String em = errormessage.getText().trim().toLowerCase();;
+		assertEquals(string.trim().toLowerCase(), em);
 	}
 	
 	@When("I enter an invalid username {string}")
@@ -87,13 +89,13 @@ public class StepDefinitions {
 	}
 	@When("I enter any password")
 	public void i_enter_any_password() {
-		WebElement queryBox = driver.findElement(By.id("pass"));
+		WebElement queryBox = driver.findElement(By.id("password"));
 		queryBox.sendKeys("test2test");
 	}
 	
 	@When("I click submit on login")
 	public void i_click_submit_on_login() throws InterruptedException {
-		WebElement searchButton = driver.findElement(By.className("sign-in-button"));
+		WebElement searchButton = driver.findElement(By.id("loginbutton"));
 	    searchButton.click();
 	    Thread.sleep(1000);
 	}
