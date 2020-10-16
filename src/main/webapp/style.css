@@ -1,3 +1,39 @@
+@font-face
+{
+	font-family:'Avenir Next';
+	src: url("fonts/AvenirNext-Regular.ttf");
+	font-weight:normal;
+}
+@font-face
+{
+	font-family:'Avenir Next';
+	src: url("fonts/AvenirNext-Bold.ttf");
+	font-weight:bold;
+}
+@font-face
+{
+	font-family:'Avenir Next';
+	src: url("fonts/AvenirNext-DemiBold.ttf");
+	font-weight:600;
+}
+@font-face
+{
+	font-family:'Avenir Next';
+	src: url("fonts/AvenirNext-Medium.ttf");
+	font-weight:500;
+}
+@font-face
+{
+	font-family:'Avenir Next';
+	src: url("fonts/AvenirNext-UltraLight.ttf");
+	font-weight:200;
+}
+@font-face
+{
+	font-family:'Avenir Next';
+	src: url("fonts/AvenirNext-Italic.ttf");
+	font-style:italic;
+}
 body {
 	margin: 0;
 	background-color: #F5F5F5;
@@ -18,6 +54,9 @@ body {
 }
 .navbar h1 {
 	font-size: 22px;
+	font-family:'Avenir Next';
+	font-size: 28px;
+	font-weight:100 !important;
 }
 .button {
 	display: inline-block;

@@ -5,7 +5,9 @@
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="styleSI.css">
-<script src="https://kit.fontawesome.com/dbcc9507e2.js" crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="jparticle.jquery.min.js"></script>
+<!-- <script src="https://kit.fontawesome.com/dbcc9507e2.js" crossorigin="anonymous"></script> -->
 <title>Sign In</title>
 </head>
 <body id = "start">
@@ -14,31 +16,56 @@
 			<h1>USC CS 310: Stock Portfolio Management</h1>
 		</div>
 	</div>
-	<div class="login">
-		<form id="logInForm">
-			<h3>Login</h3>
-			<div>
-				<label for="username">Username:</label>
-		    <input type="text" id="username" name="username">
-			</div>
-			<br/>
-			<div>
-				<label for="pass">Password (8 characters minimum):</label>
-				<input type="password" id="pass" name="password">
-			</div>
-			<br/>
-			<div id="subButton">
-				<button type="submit" class="sign-in-button"><i class="fas fa-sign-out-alt"></i>&nbsp&nbspSign In</button>
-			</div>
-			<div id = "signUpLink">
-				<a href = "signup.jsp">Don't have an account? Sign Up!</a>
-			</div>
-			<div id = "errorMessage">
-				
-			</div>
+	
+	<div id="signdiv">			
+		<div id="login_p_div">
+			<p id="loginp">Login</p>
+		</div>
+		<form name="loginForm" id="loginForm">
+			<p id="usernametext" class="formobj">Username</p>
+			<input type="text" name="username" id="username" class="inputbar" value="">
+			<p id="passwordtext"class="formobj">Password</p>
+			<input type="password" name="password" id="password" class="inputbar">
+			<p id="placeholder"><br></p>
+			<input type="submit" name="submit" class="formobj" value="login" id="loginbutton">
 		</form>
-		
 	</div>
+	
+	<div id="errordiv">
+		<p id="errormessage"><br></p>
+	</div>
+	
+	<div id="registerdiv">
+		<p id="registerp">Don't have an account?</p>
+		<button id="registerbutton" onclick="location.href='signup.jsp'">sign up</button>
+	</div>
+	<!-- sparkly things -->
+	<div id="background">
+			<script>
+				$(function(){
+					$("body").jParticle({
+						particlesNumber: 150,
+			            linkDist: 50,
+			            disableLinks: false,
+			            disableMouse: false,
+			            createLinkDist: 200,
+			            color: '#6BBDDF',
+			            width:null,
+			            height:null,
+			            background: '#fcfcfc',
+			            linksWidth: 0.5,
+			            particle: 
+			            {
+			                color: "white",
+			                minSize: 1,
+			                maxSize: 1,
+			                speed: 30
+			            }
+					});
+				});
+				</script><script type="text/javascript">
+			</script>
+		</div>
 	<script>
 		let numFailed = 0;
 		let url = "api/login";
@@ -49,61 +76,61 @@
 			let num = data; // to be gotten from data;
 			if(num == 0){
 				//error 1
-				document.body.id = "errorScreen";
+				//document.body.id = "errorScreen";
 				numFailed++;
-				document.querySelector("#pass").style.borderColor = "#ff0033";
-				document.querySelector("#username").style.borderColor = "#ff0033";
-				document.querySelector("#errorMessage").innerHTML = "<p id = \"Merror\">No user with this username exists</p>";
-				document.querySelector(".login").style.height = "350px";
+				//document.querySelector("#pass").style.borderColor = "#ff0033";
+				//document.querySelector("#username").style.borderColor = "#ff0033";
+				document.getElementById("errormessage").innerHTML = "No user with this username exists";
+				//document.querySelector(".login").style.height = "350px";
 			}
 			else if(num >= 1){
 				window.location.href = "homepage.jsp"
 			}
 			else if(num == -2){
 				//error 3
-				document.body.id = "errorScreen";
+				//document.body.id = "errorScreen";
 				numFailed++;
-				document.querySelector("#pass").style.borderColor = "#ff0033";
-				document.querySelector("#username").style.borderColor = "#ff0033";
-				document.querySelector("#errorMessage").innerHTML = "<p id = \"Merror\">The password you entered is invalid</p>";
-				document.querySelector(".login").style.height = "350px";
+				//document.querySelector("#pass").style.borderColor = "#ff0033";
+				//document.querySelector("#username").style.borderColor = "#ff0033";
+				document.getElementById("errormessage").innerHTML = "The password you entered is invalid";
+				//document.querySelector(".login").style.height = "350px";
 			}
 			
 					
 		}
 		
-		document.querySelector("#logInForm").onsubmit = function(event){
+		document.getElementById("loginForm").onsubmit = function(event){
 			event.preventDefault();
 			
-			let userName = document.querySelector("#username").value;
-			let pass = document.querySelector("#pass").value;
+			let userName = document.getElementById("username").value;
+			let pass = document.getElementById("password").value;
 			
 			if(numFailed > 2){
-				document.querySelector(".sign-in-button").enabled = false;
-				document.querySelector("#errorMessage").innerHTML = "<p id = \"Merror\">You have been locked for failing to sign in three times</p>";
-				document.querySelector(".login").style.height = "350px";
+				document.getElementById("loginbutton").enabled = false;
+				document.getElementById("errormessage").innerHTML = "You have been locked for failing to sign in three times";
+				//document.querySelector(".login").style.height = "350px";
 			}	
 			else if(userName.length < 1){
-				document.body.id = "errorScreen";
+				//document.body.id = "errorScreen";
 				numFailed++;
-				document.querySelector("#pass").style.borderColor = "#ff0033";
-				document.querySelector("#username").style.borderColor = "#ff0033";
+				//document.querySelector("#pass").style.borderColor = "#ff0033";
+				//document.querySelector("#username").style.borderColor = "#ff0033";
 				if(pass.length < 8){
-					document.querySelector("#errorMessage").innerHTML = "<p id = \"Merror\">Please input a username of atleast 1 character as well as a password of atleast 8 characters</p>";
+					document.getElementById("errormessage").innerHTML = "Username cannot be empty and password must be at least 8 characters";
 					
 				}
 				else{
-					document.querySelector("#errorMessage").innerHTML = "<p id = \"Merror\">Please input a username of atleast 1 character</p>";
+					document.getElementById("errormessage").innerHTML = "Username cannot be empty.";
 				}
-				document.querySelector(".login").style.height = "350px";
+				//document.querySelector(".login").style.height = "350px";
 			}
 			else if(pass.length < 8){
-				document.body.id = "errorScreen";
+				//document.body.id = "errorScreen";
 				numFailed++;
-				document.querySelector("#pass").style.borderColor = "#ff0033";
-				document.querySelector("#username").style.borderColor = "#ff0033";
-				document.querySelector("#errorMessage").innerHTML = "<p id = \"Merror\">Please input a password of atleast 8 characters</p>";
-				document.querySelector(".login").style.height = "350px";
+				//document.querySelector("#pass").style.borderColor = "#ff0033";
+				//document.querySelector("#username").style.borderColor = "#ff0033";
+				document.getElementById("errormessage").innerHTML = "Please input a password of at least 8 characters";
+				//document.querySelector(".login").style.height = "350px";
 			}
 			else{
 				let httpRequest = new XMLHttpRequest();
