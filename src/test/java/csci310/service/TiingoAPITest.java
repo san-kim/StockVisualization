@@ -21,5 +21,12 @@ public class TiingoAPITest {
 		double price = stock.stockPriceFromDate("AAPL", "2010-05-06");
 		assertTrue(price > 25);
 	}
+	
+	@Test
+	public void testStockPriceFromRange() throws IOException {
+		TiingoAPI stock = new TiingoAPI();
+		double price = stock.stockPriceFromRange("AAPL", "2010-05-06", "2010-07-06");
+		assertTrue(price > 25);
+	}
 
 }
