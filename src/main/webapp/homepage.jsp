@@ -6,8 +6,30 @@
 	<title>Home</title>
 	<script src="https://kit.fontawesome.com/dbcc9507e2.js" crossorigin="anonymous"></script>
 	<link rel="icon" href=https://www.daytrading.com/favicon32x32.png type="image/ico" />
-
 	<script>
+		//first check we are not null or logged out user, redirect to index if we are
+		var xhttp0 = new XMLHttpRequest();
+		xhttp0.open("POST", "HomeServlet?check=" + "true", false);
+		xhttp0.send();
+		
+		var result0 = xhttp0.responseText.trim();
+		//guard against null user
+		var errormsg0 = "user not logged in";
+		if(result0 == errormsg0.trim())
+		{
+			window.location.href = "http://localhost:8080/signIn.jsp";
+		}
+
+		function logout()
+	    {				
+			//sends back the error response or creates new account if successful
+			var xhttp1 = new XMLHttpRequest();
+			xhttp1.open("POST", "HomeServlet?logout=" + "true", false);
+			xhttp1.send();
+	    }
+	</script>
+
+	<script>		
 		// Log out user after 120 seconds of inactivity
 		var userInactivity = function () {
 		    var time;
@@ -69,7 +91,7 @@
 	<div class="navbar">
 		<div class="wrap">
 			<h1>USC CS 310: Stock Portfolio Management</h1>
-			<a href="signIn.jsp" class="button"><i class="fas fa-sign-out-alt"></i>&nbsp&nbspSign Out</a>
+			<a href="signIn.jsp" class="button" onclick="return logout();"><i class="fas fa-sign-out-alt"></i>&nbsp&nbspSign Out</a>
 		</div>
 	</div>
     <div class="wrap">
