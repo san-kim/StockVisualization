@@ -38,4 +38,8 @@ public class TiingoAPI {
 		return myResponse.getDouble("close");
 	}
 
+	public double stockPriceFromDate(String ticker, String date) throws IOException {
+		return 0;
+	}
+
 }
