@@ -14,6 +14,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Step definitions for Cucumber tests.
  */
@@ -21,6 +23,18 @@ public class StepDefinitions {
 	private static final String ROOT_URL = "http://localhost:8080/";
 
 	private final WebDriver driver = new ChromeDriver();
+	
+	//to be used if homepage is necessary
+	private void loginTestUser()
+	{
+		driver.get(ROOT_URL+"signIn.jsp");
+		WebElement queryBox1 = driver.findElement(By.id("username"));
+		queryBox1.sendKeys("test2");
+		WebElement queryBox2 = driver.findElement(By.id("password"));
+		queryBox2.sendKeys("test2test");
+		WebElement searchButton = driver.findElement(By.id("loginbutton"));
+	    searchButton.click();
+	}
 
 	@Given("I am on the index page")
 	public void i_am_on_the_index_page() {
@@ -102,7 +116,10 @@ public class StepDefinitions {
 	
 	@Given("I am on the home page")
 	public void i_am_on_the_home_page() throws InterruptedException {
-	    driver.get(ROOT_URL+"homepage.jsp");
+		//first we have to log in to user
+		loginTestUser();
+		//then we can go to homepage
+	    //driver.get(ROOT_URL+"homepage.jsp");
 	    Thread.sleep(1000);
 	}
 	
@@ -114,6 +131,25 @@ public class StepDefinitions {
 	}
 	@Then("I should be signed out and taken back to the sign in page")
 	public void i_should_be_signed_out_and_taken_back_to_the_sign_in_page() {
+		assertTrue(driver.getCurrentUrl().equalsIgnoreCase("http://localhost:8080/signIn.jsp"));
+	}
+	
+	@Given("I am forcefully on the home page")
+	public void i_am_forcefully_on_the_home_page() throws InterruptedException {
+	    driver.get(ROOT_URL+"homepage.jsp");
+	    try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@When("I am not logged in")
+	public void i_am_not_logged_in() {
+	    //nothing to do here
+	}
+	@Then("I should be redirected to login page")
+	public void i_should_be_redirected_to_login_page() {
 		assertTrue(driver.getCurrentUrl().equalsIgnoreCase("http://localhost:8080/signIn.jsp"));
 	}
 	
@@ -214,19 +250,21 @@ public class StepDefinitions {
 	@When("{int} seconds of inactivity occurs")
 	public void seconds_of_inactivity_occurs(Integer int1) throws InterruptedException {
 		int ms = int1 * 1000;
-		Thread.sleep(ms + 7000);
+		Thread.sleep(ms + 3000);
 	}
 
 	@Then("I should see an alert that I am being logged out")
-	public void i_should_see_an_alert_that_I_am_being_logged_out() {
-		boolean alert;
-	    try {
-	    	driver.switchTo().alert();
-	    	alert = true;
-	    } catch (NoAlertPresentException nape) {
-	    	alert = false;
-	    }
-	    assertTrue(alert);
+	public void i_should_see_an_alert_that_I_am_being_logged_out() throws InterruptedException {
+		
+//		boolean alert;
+//	    try {
+//	    	driver.switchTo().alert();
+//	    	alert = true;
+//	    } catch (NoAlertPresentException nape) {
+//	    	alert = false;
+//	    }
+		
+	    assertTrue(driver.getCurrentUrl().equalsIgnoreCase("http://localhost:8080/signIn.jsp"));
 	}
 	
 	@When("I click Import CSV")

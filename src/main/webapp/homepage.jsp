@@ -20,7 +20,7 @@
 			window.location.href = "http://localhost:8080/signIn.jsp";
 		}
 
-		function logout()
+		function logout1()
 	    {				
 			//sends back the error response or creates new account if successful
 			var xhttp1 = new XMLHttpRequest();
@@ -42,12 +42,16 @@
 		    	// Alert user logout
 		        alert("You have been logged out due to two minutes of inactivity.")
 		        // Redirect to sign in page
-		        location.href = "signIn.jsp";
+		        var xhttp1 = new XMLHttpRequest();
+				xhttp1.open("POST", "HomeServlet?logout=" + "true", false);
+				xhttp1.send();
+				
+				window.location.href = "http://localhost:8080/signIn.jsp";
 		    }
 		    // Reset the timer
 		    function resetTimer() {
 		        clearTimeout(time);
-		        time = setTimeout(logout, 12000000);
+		        time = setTimeout(logout, 120000);
 		    }
 		};
 		// Load timer on page load
@@ -91,7 +95,7 @@
 	<div class="navbar">
 		<div class="wrap">
 			<h1>USC CS 310: Stock Portfolio Management</h1>
-			<a href="signIn.jsp" class="button" onclick="return logout();"><i class="fas fa-sign-out-alt"></i>&nbsp&nbspSign Out</a>
+			<a href="signIn.jsp" class="button" onclick="return logout1();"><i class="fas fa-sign-out-alt"></i>&nbsp&nbspSign Out</a>
 		</div>
 	</div>
     <div class="wrap">
