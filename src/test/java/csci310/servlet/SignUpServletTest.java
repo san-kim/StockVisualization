@@ -142,7 +142,7 @@ public class SignUpServletTest extends Mockito {
 		
 		
 		
-		String username = "testusername24";
+		String username = "testusername25";
 		
 		
 		
