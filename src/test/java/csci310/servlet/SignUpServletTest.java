@@ -86,7 +86,6 @@ public class SignUpServletTest extends Mockito {
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		when(request.getSession()).thenReturn(mock(HttpSession.class));
-		BufferedReader reader = new BufferedReader(new StringReader("{\"username\":\"test2test\",\"password\":\"test2test3\"}"));
 		when(request.getReader()).thenThrow(new IOException());
 		
 		StringWriter stringWriter = new StringWriter();
