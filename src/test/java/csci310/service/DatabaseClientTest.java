@@ -258,6 +258,35 @@ public class DatabaseClientTest extends Mockito {
 	}
 	
 	@Test
+	public void testDeleteUser() {
+		db.createUser("randomtest123", "asdfasdfasdf123");
+		assertTrue(db.deleteUser("randomtest123"));
+	}
+	
+	@Test
+	public void testDeleteUserThrowsException() throws SQLException {
+		db.createUser("randomtest1234", "asdfasdfasdf123");
+		try {
+//			Connection mockConn = mock(Connection.class);
+//			mockDb.setConnection(mockConn);
+//			when(mockConn.createStatement()).thenThrow(new SQLException());
+//			
+//			
+			Connection mockConn = mock(Connection.class);
+			mockDb.setConnection(mockConn);
+			String query = "DELETE FROM User WHERE username=?";
+			when(mockConn.prepareStatement(query)).thenThrow(new SQLException());
+			assertTrue(mockDb.deleteUser("randomtest1234") == false);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabaseClient db_temp = new DatabaseClient();
+		db_temp.deleteUser("randomtest1234");
+		//assertTrue(true);
+	}
+	
+	@Test
 	public void testClearDatabase() {
 		assertTrue(db.clearDatabase());
 	}
@@ -274,7 +303,6 @@ public class DatabaseClientTest extends Mockito {
 		mockDb.clearDatabase();
 		assertTrue(true);
 	}
-
 }
 
 
