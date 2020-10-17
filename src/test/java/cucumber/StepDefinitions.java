@@ -11,7 +11,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import csci310.service.DatabaseClient;
+import csci310.service.PasswordAuthentication;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * Step definitions for Cucumber tests.
@@ -20,6 +29,18 @@ public class StepDefinitions {
 	private static final String ROOT_URL = "http://localhost:8080/";
 
 	private final WebDriver driver = new ChromeDriver();
+	
+	//to be used if homepage is necessary
+	private void loginTestUser()
+	{
+		driver.get(ROOT_URL+"signIn.jsp");
+		WebElement queryBox1 = driver.findElement(By.id("username"));
+		queryBox1.sendKeys("test2");
+		WebElement queryBox2 = driver.findElement(By.id("password"));
+		queryBox2.sendKeys("test2test");
+		WebElement searchButton = driver.findElement(By.id("loginbutton"));
+	    searchButton.click();
+	}
 
 	@Given("I am on the index page")
 	public void i_am_on_the_index_page() {
@@ -57,7 +78,7 @@ public class StepDefinitions {
 	
 	@When("I enter the correct password {string}")
 	public void i_enter_the_correct_password(String string) {
-		WebElement queryBox = driver.findElement(By.id("pass"));
+		WebElement queryBox = driver.findElement(By.id("password"));
 		queryBox.sendKeys(string);
 	}
 	
@@ -70,14 +91,15 @@ public class StepDefinitions {
 	
 	@When("I enter an incorrect password {string}")
 	public void i_enter_an_incorrect_password(String string) {
-		WebElement queryBox = driver.findElement(By.id("pass"));
+		WebElement queryBox = driver.findElement(By.id("password"));
 		queryBox.sendKeys(string);
 	}
 	@Then("I should see the error {string}")
 	public void i_should_see_the_error(String string) throws InterruptedException {
 		Thread.sleep(1000);
-		WebElement errorBox = driver.findElement(By.id("Merror"));
-		assertTrue(string.equalsIgnoreCase(errorBox.getText()));
+		WebElement errormessage = driver.findElement(By.id("errormessage"));
+		String em = errormessage.getText().trim().toLowerCase();;
+		assertEquals(string.trim().toLowerCase(), em);
 	}
 	
 	@When("I enter an invalid username {string}")
@@ -87,20 +109,23 @@ public class StepDefinitions {
 	}
 	@When("I enter any password")
 	public void i_enter_any_password() {
-		WebElement queryBox = driver.findElement(By.id("pass"));
+		WebElement queryBox = driver.findElement(By.id("password"));
 		queryBox.sendKeys("test2test");
 	}
 	
 	@When("I click submit on login")
 	public void i_click_submit_on_login() throws InterruptedException {
-		WebElement searchButton = driver.findElement(By.className("sign-in-button"));
+		WebElement searchButton = driver.findElement(By.id("loginbutton"));
 	    searchButton.click();
 	    Thread.sleep(1000);
 	}
 	
 	@Given("I am on the home page")
 	public void i_am_on_the_home_page() throws InterruptedException {
-	    driver.get(ROOT_URL+"homepage.jsp");
+		//first we have to log in to user
+		loginTestUser();
+		//then we can go to homepage
+	    //driver.get(ROOT_URL+"homepage.jsp");
 	    Thread.sleep(1000);
 	}
 	
@@ -115,40 +140,98 @@ public class StepDefinitions {
 		assertTrue(driver.getCurrentUrl().equalsIgnoreCase("http://localhost:8080/signIn.jsp"));
 	}
 	
-/*************************************************************************/
+	@Given("I am forcefully on the home page")
+	public void i_am_forcefully_on_the_home_page() throws InterruptedException {
+	    driver.get(ROOT_URL+"homepage.jsp");
+	    try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 	
+	@When("I am not logged in")
+	public void i_am_not_logged_in() {
+	    //nothing to do here
+	}
+	@Then("I should be redirected to login page")
+	public void i_should_be_redirected_to_login_page() {
+		assertTrue(driver.getCurrentUrl().equalsIgnoreCase("http://localhost:8080/signIn.jsp"));
+	}
+	
+/*************************************************************************/
 	@Given("I am on the sign up page")
 	public void i_am_on_the_sign_up_page() {
 		driver.get(ROOT_URL+"signup.jsp");
 	}
-	
 	@When("I enter an invalid username {string} that already exists")
-	public void i_enter_an_invalid_username_that_already_exists(String string) {
-	    
+	public void i_enter_an_invalid_username_that_already_exists(String string) throws NoSuchAlgorithmException, SQLException {
+		DatabaseClient db = new DatabaseClient();
+		PasswordAuthentication passAuth = new PasswordAuthentication();
+		String hashedPass = passAuth.hash("asdfasdf123", null, null);
+		db.createUser(string, hashedPass);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		WebElement queryBox = driver.findElement(By.id("username"));
+		queryBox.sendKeys(string);
 	}
-	@When("I enter a password")
-	public void i_enter_a_password() {
-	    
-	}
-	@Then("I should see the invalid username error {string}")
-	public void i_should_see_the_invalid_username_error(String string) {
-	    
-	}
-  
-	/*************************************************************************/
-
 	@When("I enter a valid username {string} that does not exist")
 	public void i_enter_a_valid_username_that_does_not_exist(String string) {
-	   
+		WebElement queryBox = driver.findElement(By.id("username"));
+		queryBox.sendKeys(string);
 	}
-	@When("I enter a valid password {string}")
+	@When("I enter a password {string}")
+	public void i_enter_a_password(String string) {
+		WebElement queryBox = driver.findElement(By.id("password"));
+		queryBox.sendKeys(string);
+	}
+	@When("I enter a password and confirmpassword {string}")
+	public void i_enter_a_password_and_confirmpassword(String string) {
+		WebElement queryBox = driver.findElement(By.id("password"));
+		queryBox.sendKeys(string);
+		WebElement queryBox1 = driver.findElement(By.id("confirmpassword"));
+		queryBox1.sendKeys(string);
+	}
+	@When("I enter a different password {string}")
+	public void i_enter_a_different_password(String string) {
+		WebElement queryBox = driver.findElement(By.id("confirmpassword"));
+		queryBox.sendKeys(string);
+	}
+	@When("I enter a valid password and confirmpassword {string}")
 	public void i_enter_a_valid_password(String string) {
-	    
+		WebElement queryBox = driver.findElement(By.id("password"));
+		queryBox.sendKeys(string);
+		WebElement queryBox1 = driver.findElement(By.id("confirmpassword"));
+		queryBox1.sendKeys(string);
 	}
-	@Then("I should land on the homepage")
-	public void i_should_land_on_the_homepage() {
+	
+	@Then("I should be redirected to login page from signUp")
+	public void i_should_be_redirected_to_login_page_from_signUp() {
+		WebElement button = driver.findElement(By.id("registerbutton"));
+		button.click();
+	    try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	    
+	    assertTrue(driver.getCurrentUrl().equalsIgnoreCase("http://localhost:8080/signIn.jsp"));
 	}
+	
+	@Then("I should see the invalid username error {string}")
+	public void i_should_see_the_invalid_username_error(String string) throws InterruptedException {
+		WebElement button = driver.findElement(By.id("registerbutton"));
+		button.click();
+		Thread.sleep(3000);
+		WebElement errormessage = driver.findElement(By.id("errormessage"));
+		String em = errormessage.getText().trim().toLowerCase();
+		assertEquals(string.trim().toLowerCase(), em);
+	}
+/*************************************************************************/
 
 	
 	@When("I click Add Stock in the Portfolio box")
@@ -212,19 +295,21 @@ public class StepDefinitions {
 	@When("{int} seconds of inactivity occurs")
 	public void seconds_of_inactivity_occurs(Integer int1) throws InterruptedException {
 		int ms = int1 * 1000;
-		Thread.sleep(ms + 7000);
+		Thread.sleep(ms + 3000);
 	}
 
 	@Then("I should see an alert that I am being logged out")
-	public void i_should_see_an_alert_that_I_am_being_logged_out() {
-		boolean alert;
-	    try {
-	    	driver.switchTo().alert();
-	    	alert = true;
-	    } catch (NoAlertPresentException nape) {
-	    	alert = false;
-	    }
-	    assertTrue(alert);
+	public void i_should_see_an_alert_that_I_am_being_logged_out() throws InterruptedException {
+		
+//		boolean alert;
+//	    try {
+//	    	driver.switchTo().alert();
+//	    	alert = true;
+//	    } catch (NoAlertPresentException nape) {
+//	    	alert = false;
+//	    }
+		
+	    assertTrue(driver.getCurrentUrl().equalsIgnoreCase("http://localhost:8080/signIn.jsp"));
 	}
 	
 	@When("I click Import CSV")

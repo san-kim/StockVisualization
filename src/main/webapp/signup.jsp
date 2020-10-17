@@ -16,50 +16,26 @@
 		</div>
 	</div>
 	
-	<!-- <div class="signup"> 
-	
-		<form id="register">
-			<div>
-				<label for="username"> Username </label>
-				<input type="text" id="username" name="username" minlength="1" required>
-			</div>
-			
-			<br/>
-			
-			<div>
-				<label for="password"> Password (8 characters minimum required) </label>
-				<input type="password" id="password" name="password" minlength="8" required>
-			</div>
-			
-			<br/> <br/>
-			
-			<div id="signupbutton">
-				<button type="submit" class="signup-button"><i class="fas fa-sign-out-alt"></i>&nbsp&nbspSign Up</button>
-			</div>
-		</form>
-		
-	</div> -->
-	
 	<script>
 		function checkUsernamePassword()
 		{
-			var a = document.getElementById("username").value;
-			var b = document.getElementById("password").value;
-			var c = document.getElementById("confirmpassword").value;
+			var username = document.getElementById("username").value;
+			var password = document.getElementById("password").value;
+			var confirmpassword = document.getElementById("confirmpassword").value;
 			
-			if(a == "" && b == "")
-			{
-				document.getElementById("errormessage").innerHTML = "Please enter a username and password.";
+			//sends back the error response or creates new account if successful
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("POST", "SignupServlet?username=" + username + "&password=" + password + "&confirmpassword=" + confirmpassword, false);
+			xhttp.send();
+			
+			
+			if(xhttp.responseText.trim() != "success"){
+				document.getElementById("errormessage").innerHTML = xhttp.responseText;
 				return false;
 			}
-			else if(a == "")
+			else
 			{
-				document.getElementById("errormessage").innerHTML = "Please enter a username.";
-				return false;
-			}
-			else if(b != c)
-			{
-				document.getElementById("errormessage").innerHTML = "Passwords do not match.";
+				window.location.href = "http://localhost:8080/signIn.jsp";
 				return false;
 			}
 		}
@@ -67,7 +43,7 @@
 	
 	<div id="signdiv">	
 			<div id="register_p_div">
-				<p id="registerp">Register</p>
+				<p id="registerp">Sign Up</p>
 			</div>
 			<form name="signUpForm" method="post" onsubmit="return checkUsernamePassword();" action="">
 				<p id="usernametext" class="formobj">Username</p>

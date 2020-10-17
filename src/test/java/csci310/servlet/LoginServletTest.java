@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.stream.Collectors;
 
@@ -15,14 +16,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.junit.After;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import csci310.service.DatabaseClient;
+import csci310.service.PasswordAuthentication;
 
 public class LoginServletTest extends Mockito {
 	
 	//Correct username and password
 	@Test
-	public void testDoPost() throws ServletException, IOException {
+	public void testDoPost() throws ServletException, IOException, SQLException, NoSuchAlgorithmException {
+		DatabaseClient db = new DatabaseClient();
+		//in case it was already here
+		db.deleteUser("test2");
+		PasswordAuthentication pa = new PasswordAuthentication(); 
+		String hashedPass = pa.hash("test2test", null, null);
+		db.createUser("test2", hashedPass);
+		
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		when(request.getSession()).thenReturn(mock(HttpSession.class));
@@ -105,7 +117,7 @@ public class LoginServletTest extends Mockito {
 	
 	//Check for other general Exceptions
 	@Test
-	public void testDoPost4() throws ServletException, IOException {
+	public void testDoPost4() throws ServletException, IOException, SQLException {
 		try {
 			HttpServletRequest request = mock(HttpServletRequest.class);
 			HttpServletResponse response = mock(HttpServletResponse.class);
@@ -120,6 +132,7 @@ public class LoginServletTest extends Mockito {
 			assertNotNull(e);
 		}
 
+		DatabaseClient db = new DatabaseClient();
+		db.deleteUser("test2");
 	}
-
 }
