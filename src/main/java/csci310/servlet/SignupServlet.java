@@ -19,9 +19,13 @@ import csci310.service.PasswordAuthentication;
 /**
  * Servlet implementation class RegisterServlet
  */
+
 @WebServlet("/RegisterServlet")
 public class SignupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private PasswordAuthentication pa = new PasswordAuthentication(); 
+
        
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -86,12 +90,11 @@ public class SignupServlet extends HttpServlet {
 		//at this point we have valid and matching passwords
 		try {
 			DatabaseClient db = new DatabaseClient();
-			PasswordAuthentication passAuth = new PasswordAuthentication();
-			String hashedPass = passAuth.hash(password, null, null);
+			String hashedPass = pa.hash(password, null, null);
 			//getuser of 0 means that the username doesn't exist 
-			if(db.getUser(passAuth, username, password) == 0)
+			if(db.getUser(pa, username, password) == 0)
 			{
-				//TODO: do createUser here
+				//do createUser here
 				db.createUser(username, hashedPass);
 				
 				PrintWriter out = response.getWriter();
@@ -105,10 +108,14 @@ public class SignupServlet extends HttpServlet {
 				out.println("Username already taken!");
 				return;
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			//do nothing
-		} catch (NoSuchAlgorithmException e) {
-			//do nothing
-		}
+			e.printStackTrace();
+		} 
+	}
+	
+	public void setAuth(PasswordAuthentication pAuth)
+	{
+		pa = pAuth;
 	}
 }
