@@ -36,6 +36,8 @@ public class SignUpServletTest extends Mockito {
 	DatabaseClient db;
 	@Mock
 	PasswordAuthentication passAuth;
+	@Mock
+	SignupServlet signupServlet;
 
 	@Before
 	public void setUp() throws Exception {
@@ -140,7 +142,7 @@ public class SignUpServletTest extends Mockito {
 		
 		
 		
-		String username = "testusername7";
+		String username = "testusername24";
 		
 		
 		
@@ -172,14 +174,27 @@ public class SignUpServletTest extends Mockito {
 		assertEquals(signup, "Username already taken!");
 		
 		
-		//first exception
-		when(new DatabaseClient()).thenThrow(new SQLException());
-		new SignupServlet().doPost(request, response);	
-		assertEquals(0,0);
+//		//first exception
+//		when(new DatabaseClient()).thenThrow(new SQLException());
+//		new SignupServlet().doPost(request, response);	
+//		assertEquals(0,0);
 		
+//		PasswordAuthentication mockPassAuth = mock(PasswordAuthentication.class);
+//		when(mockPassAuth.verify(anyString(), anyString())).thenThrow(new NoSuchAlgorithmException());
+//		String username = "username1";
+//		String password = "password";
+//		db.getUser(mockPassAuth, username, password);
+//		int result = db.getUser(mockPassAuth, username, password);
+//		assertTrue("Actual is " + result, result == -1);
+		
+		signupServlet = new SignupServlet();
 		//second exception
+		stringWriter = new StringWriter();
+        writer = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(writer);
+		signupServlet.setAuth(passAuth);
 		when(passAuth.hash("password123", null, null)).thenThrow(new NoSuchAlgorithmException());
-		new SignupServlet().doPost(request, response);	
+		signupServlet.doPost(request, response);	
 		assertEquals(0,0);
 	}
 }
