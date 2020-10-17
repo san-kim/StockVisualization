@@ -1,0 +1,4 @@
+Name,Ticker,Quantity,DatePurchased,DateSold
+Tesla,TSLA,10,TestMalformed,1609142400
+Starbucks,SBUX,20,946368000,1609142400
+Nike,NKE,30,946368000,1609142400
