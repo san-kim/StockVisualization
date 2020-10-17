@@ -59,5 +59,44 @@ public class SignUpServletTest extends Mockito {
 		writer.flush();
 		assertTrue(stringWriter.toString().contains("false"));
 	}
-
+	
+	// IOException thrown.
+	@Test
+	public void testDoPost2() throws ServletException, IOException {
+		HttpServletRequest request = mock(HttpServletRequest.class);
+		HttpServletResponse response = mock(HttpServletResponse.class);
+		when(request.getSession()).thenReturn(mock(HttpSession.class));
+		BufferedReader reader = new BufferedReader(new StringReader("{\"username\":\"test2test\",\"password\":\"test2test3\"}"));
+		when(request.getReader()).thenReturn(reader);
+		
+		StringWriter stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenThrow(new IOException());
+		
+        SignUpServlet ss = new SignUpServlet();
+		ss.doPost(request, response);
+		
+		writer.flush();
+		assertTrue(stringWriter.toString().isEmpty());
+	}
+	
+	// Exception thrown.
+	@Test
+	public void testDoPost3() throws ServletException, IOException {
+		HttpServletRequest request = mock(HttpServletRequest.class);
+		HttpServletResponse response = mock(HttpServletResponse.class);
+		when(request.getSession()).thenReturn(mock(HttpSession.class));
+		BufferedReader reader = new BufferedReader(new StringReader("{\"username\":\"test2test\",\"password\":\"test2test3\"}"));
+		when(request.getReader()).thenThrow(new IOException());
+		
+		StringWriter stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(writer);
+		
+        SignUpServlet ss = new SignUpServlet();
+		ss.doPost(request, response);
+		
+		writer.flush();
+		assertTrue(stringWriter.toString().isEmpty());
+	}
 }
