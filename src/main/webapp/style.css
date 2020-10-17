@@ -1,3 +1,39 @@
+@font-face
+{
+	font-family:'Avenir Next';
+	src: url("fonts/AvenirNext-Regular.ttf");
+	font-weight:normal;
+}
+@font-face
+{
+	font-family:'Avenir Next';
+	src: url("fonts/AvenirNext-Bold.ttf");
+	font-weight:bold;
+}
+@font-face
+{
+	font-family:'Avenir Next';
+	src: url("fonts/AvenirNext-DemiBold.ttf");
+	font-weight:600;
+}
+@font-face
+{
+	font-family:'Avenir Next';
+	src: url("fonts/AvenirNext-Medium.ttf");
+	font-weight:500;
+}
+@font-face
+{
+	font-family:'Avenir Next';
+	src: url("fonts/AvenirNext-UltraLight.ttf");
+	font-weight:200;
+}
+@font-face
+{
+	font-family:'Avenir Next';
+	src: url("fonts/AvenirNext-Italic.ttf");
+	font-style:italic;
+}
 body {
 	margin: 0;
 	background-color: #F5F5F5;
@@ -18,6 +54,9 @@ body {
 }
 .navbar h1 {
 	font-size: 22px;
+	font-family:'Avenir Next';
+	font-size: 28px;
+	font-weight:100 !important;
 }
 .button {
 	display: inline-block;
@@ -70,8 +109,11 @@ input:focus {
 	border-radius: 4px;
 }
 #graph-container {
-	padding: 40px;
-	height: 400px;
+	padding-top: 20px;
+	padding-right: 30px;
+	padding-left: 30px;
+	padding-bottom: 30px;
+	height: 500px;
 	grid-column: 1 / 3;
 }
 #graph-container #portfolio-value {
@@ -81,6 +123,18 @@ input:focus {
 #graph-container #portfolio-value-change {
 	margin-top: 8px;
 }
+
+.graph-date {
+  text-align: right;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid #F5F5F5;
+  background-color: #F5F5F5;
+  font-size: 16px;
+  padding: 0 12px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 .container-header {
 	height: 68px;
 	border-bottom: 2px solid #E6E6E6;
