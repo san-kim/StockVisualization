@@ -413,7 +413,7 @@
 	    						<div class="popup-section">
 	    							<form id="import-stock-form">
 	    								<div class="form-row">
-	    									<label for=""csvImport"">Upload a .csv file</label>
+	    									<label for="csvImport">Upload a .csv file</label>
 	    									<input type="file" id="csvImport" accept=".csv">
 	    								</div>
 	    								<div class="form-row">
@@ -556,11 +556,23 @@
 		var addStockModal = document.getElementById("add-stock-modal");
 		var addStockButton = document.getElementById("add-stock-button");
 		var addStockCancelButton = document.getElementById("add-stock-cancel");
+		var addStockSubmit = document.getElementById("add-stock-submit");
 
 		// When user clicks add stock button
 		addStockButton.onclick = function() {
 			document.getElementById("add-stock-form").reset();
 			addStockModal.style.display = "flex";
+		}
+
+		addStockSubmit.onclick = function() {
+			console.log(document.getElementById("ticker").value);
+			console.log(document.getElementById("shares").value);
+			console.log(document.getElementById("date-purchased").value);
+			console.log(document.getElementById("date-sold").value);
+			//error checking to be done 
+
+			
+			//addStockModal.style.display = "none";
 		}
 		// When user cancels adding a stock
 		addStockCancelButton.onclick = function() {
