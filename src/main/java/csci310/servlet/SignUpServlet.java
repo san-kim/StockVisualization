@@ -25,6 +25,41 @@ public class SignUpServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO(JamieFlores): Implement sign up.
+		try {
+			DatabaseClient db = new DatabaseClient();
+			PasswordAuthentication passwordAuthentication = new PasswordAuthentication();
+			
+			// Takes POST parameters and parses them into JSON String.
+			String requestBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+			HttpSession session = request.getSession();
+			
+			// Parse JSON string into a usable JSON object.
+			JSONObject jo = new JSONObject(requestBody);
+			String username = jo.getString("username");
+			String hashedPassword = passwordAuthentication.hash(jo.getString("password"), null, null);
+			//Passes password and username into the database with the password authentication class to be hashed
+			boolean result = db.createUser(username, hashedPassword);
+			System.out.println(result);
+			
+			// New user created successfully
+			if(result) {
+				session.setAttribute("signup", true);
+			} else {
+				// Sign up unsuccessful because username already exists in the database.
+				session.setAttribute("signup", false);
+			}
+			try {
+				PrintWriter pw = response.getWriter();
+				pw.write("" + result);
+				pw.flush();
+			} catch (IOException e) {
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				System.out.println("Error");
+				return;
+			}
+		} catch (Exception e) {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			System.out.println("Error2");
+		}
 	}
 }
