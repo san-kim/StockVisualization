@@ -87,7 +87,7 @@
 						<div style="height:300px !important;">
 				    	<canvas id="myChart"  style="top: 0px; left: 0px;"></canvas>
 						</div>
-				    <div style="height:50px;width:20px;position:absolute;bottom:0;right:0;margin-bottom:32px;margin-right:37px;background:white;border-radius:5px;border: 2px solid #51C58E;">
+				    <div style="height:50px;width:20px;position:absolute;bottom:0;right:0;margin-bottom:32px;margin-right:44px;background:white;border-radius:5px;border: 2px solid #51C58E;">
 				      <div style="height:25px;width:20px;text-align:center;font-weight:bolder;">
 				        <button type="button" id="graphzoomin" style="border:none;text-align:center;margin-left:-1px;margin-top:3px;background-color:transparent;font-size:13pt;font-weight:bolder;color:#51C58E;">+</button>
 				      </div>
@@ -100,10 +100,25 @@
 					<br>
 					<button type="button" class="button" id="spytoggle" >Remove S&amp;P</button>
 				  <button type="button" class="button" id="stocktoggle" >Add Stock</button>
-					<br>
-					<br>
 					<input type="date" class="graph-date" id="date-start-graph" placeholder="StartDate">
 					<input type="date" class="graph-date" id="date-end-graph" placeholder="EndDate">
+					<button type="button" class="button" id="render-new-dates" >Update Graph</button>
+					<br>
+					<br>
+					<form>
+					  <label for="cars">Change frequency:</label>
+					  <select class="graph-date" id="data-per-month-select">
+					    <option value="monthly">Monthly</option>
+					    <option value="semi-weekly">Semi-weekly</option>
+					    <option value="weekly">Weekly</option>
+					  </select>
+						<button type="button" class="button" id="render-new-data-per-month" >Submit</button>
+					</form>
+					<script>
+						$(document).ready(function(){
+
+						});
+					</script>
 	    	</div> <!-- #graph-container -->
 
 				<script>
@@ -112,8 +127,9 @@
 				var lineColors = ["#f5f5dc", "#000000", "#0000ff", "#a52a2a", "#00ffff", "#00008b", "#008b8b", "#a9a9a9", "#006400", "#bdb76b", "#8b008b", "#ff8c00", "#9932cc", "#8b0000", "#e9967a", "#9400d3", "#008000", "#f0e68c", "#add8e6", "#e0ffff", "#90ee90", "#d3d3d3", "#800000", "#000080", "#808000", "#ffa500", "#ffc0cb", "#800080", "#800080", "#ff0000", "#c0c0c0", "#00ffff", "#ffb6c1", "#00ff00", "#ff00ff", "#556b2f", "#ffd700", "#4b0082"]
 
 				var ctx = document.getElementById('myChart').getContext('2d');
-				var months_to_show = 6
-				var data_per_month = 1
+				var months_to_show = 3
+				var data_per_month = 2
+				var offset_end_date_from_today = 0
 				var show_portfolio = true
 				var show_spy = true
 
@@ -198,7 +214,7 @@
 				function generateLabels() {
 					const monthNames = ["January-16", "February-16", "March-16", "April-16", "May-16", "June-16", "July-16", "August-16", "September-16", "October-16", "November-16", "December-16", "January-17", "February-17", "March-17", "April-17", "May-17", "June-17", "July-17", "August-17", "September-17", "October-17", "November-17", "December-17", "January-18", "February-18", "March-18", "April-18", "May-18", "June-18", "July-18", "August-18", "September-18", "October-18", "November-18", "December-18", "January-19", "February-19", "March-19", "April-19", "May-19", "June-19", "July-19", "August-19", "September-19", "October-19", "November-19", "December-19", "January-20", "February-20", "March-20", "April-20", "May-20", "June-20", "July-20", "August-20", "September-20", "October-20", "November-20", "December-20"];
 					const d = new Date();
-					var thisMonth = d.getMonth() + 48 - months_to_show;
+					var thisMonth = d.getMonth() + 48 - months_to_show - offset_end_date_from_today;
 					var label = [];
 					var i;
 					for (i = 0; i < months_to_show; i++) {
@@ -218,8 +234,10 @@
 					var datapoints = data_per_month * months_to_show;
 					console.log(datapoints)
 					var i;
+					var last_val = Math.floor(Math.random() * (20 - 10 + 1)) + 10;
 					for (i = 0; i < datapoints; i++) {
-						values.push(Math.floor(Math.random() * (20 - 10 + 1)) + 10);
+						last_val = last_val + Math.floor(Math.random() * 2 - .5);
+						values.push(last_val);
 					}
 					return values;
 				}
@@ -254,6 +272,32 @@
 							}
 						}
 						renderGraph();
+					}
+
+					function addStock(ticker) {
+						console.log("adding stock:");
+						console.log(ticker);
+
+						var viewed_stock_string = "Viewed Stock: ";
+
+						var labels = generateLabels();
+
+						var chartData = {
+								label: viewed_stock_string.concat(ticker),
+								data: generateValues(ticker),
+								backgroundColor: 'rgba(255, 99, 132, 0)',
+								borderColor: takeRandomColor(),
+								borderWidth: 3
+						};
+						addData(myChart, labels, chartData);
+					}
+
+					function removeStock(ticker) {
+						console.log("removing stock:");
+						console.log(ticker);
+
+						var viewed_stock_string = "Viewed Stock: ";
+						removeData(myChart, viewed_stock_string.concat(ticker));
 					}
 
 
@@ -342,7 +386,7 @@
 							data_per_month = data_per_month*2;
 						}
 
-						renderGraph()
+						renderGraph();
 					});
 
 					$("#graphzoomout").click(function(){
@@ -350,8 +394,60 @@
 						if(data_per_month > 1){
 							data_per_month = data_per_month/2;
 						}
-						renderGraph()
+						renderGraph();
 					});
+
+					$("#render-new-dates").click(function(){
+						var date_start = new Date($('#date-start-graph').val());
+						var date_end = new Date($('#date-end-graph').val());
+						const today = new Date();
+						var time_difference = date_end.getTime() - date_start.getTime();
+						var day_difference = time_difference / (1000 * 3600 * 24);
+						months_to_show = Math.round(day_difference / 30);
+						offset_end_date_from_today = Math.round((today.getTime()- date_end.getTime()) / (1000 * 3600 * 24 * 30))-1;
+
+						renderGraph();
+
+						console.log(months_to_show);
+
+					});
+
+					$("#render-new-data-per-month").click(function(){
+						var frequencyLabel = $('#data-per-month-select').val();
+
+						if(frequencyLabel == "monthly"){
+							data_per_month = 1;
+						}
+						if(frequencyLabel == "semi-weekly"){
+							data_per_month = 2;
+						}
+						if(frequencyLabel == "weekly"){
+							data_per_month = 4;
+						}
+
+						renderGraph();
+
+						console.log(frequencyLabel);
+
+					});
+
+
+
+					// This controls calls to viewed stock checks
+					$('.viewed_stock').click(function(){
+				    if($(this).is(':checked')){
+				        var id = $(this).attr('id');
+								addStock(id);
+				    } else {
+							var id = $(this).attr('id');
+							removeStock(id);
+				    }
+					});
+
+
+
+
+
 				});
 
 
@@ -437,7 +533,7 @@
 	    				<td>AAPL</td>
 	    				<td>
 	    					<label class="switch">
-	    						<input type="checkbox" checked>
+	    						<input id="AAPL" class="portfolio_stock" type="checkbox" unchecked>
 							  	<span class="slider round"></span>
 							</label>
 						</td>
@@ -448,7 +544,7 @@
 	    				<td>TSLA</td>
 	    				<td>
 	    					<label class="switch">
-	    						<input type="checkbox" checked>
+	    						<input id="TSLA" class="portfolio_stock" type="checkbox" unchecked>
 							  	<span class="slider round"></span>
 							</label>
 						</td>
@@ -459,7 +555,7 @@
 	    				<td>F</td>
 	    				<td>
 	    					<label class="switch">
-	    						<input type="checkbox" checked>
+	    						<input id="F" class="portfolio_stock" type="checkbox" unchecked>
 							  	<span class="slider round"></span>
 							</label>
 						</td>
@@ -515,7 +611,7 @@
 	    				<td>AAPL</td>
 	    				<td>
 	    					<label class="switch">
-	    						<input type="checkbox" checked>
+	    						<input id="AAPL" class="viewed_stock" type="checkbox" unchecked>
 							  	<span class="slider round"></span>
 							</label>
 						</td>
@@ -526,7 +622,7 @@
 	    				<td>TSLA</td>
 	    				<td>
 	    					<label class="switch">
-	    						<input type="checkbox" checked>
+	    						<input id="TSLA" class="viewed_stock" type="checkbox" unchecked>
 							  	<span class="slider round"></span>
 							</label>
 						</td>
@@ -537,7 +633,7 @@
 	    				<td>F</td>
 	    				<td>
 	    					<label class="switch">
-	    						<input type="checkbox" checked>
+	    						<input id="F" class="viewed_stock" type="checkbox" unchecked>
 							  	<span class="slider round"></span>
 							</label>
 						</td>
