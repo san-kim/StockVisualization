@@ -105,26 +105,22 @@
 			let userName = document.getElementById("username").value;
 			let pass = document.getElementById("password").value;
 			
-			if(numFailed > 2){
+			if (numFailed > 2) {
 				document.getElementById("loginbutton").enabled = false;
 				document.getElementById("errormessage").innerHTML = "You have been locked for failing to sign in three times";
 				//document.querySelector(".login").style.height = "350px";
-			}	
-			else if(userName.length < 1){
+			}	else if(userName.length < 1){
 				//document.body.id = "errorScreen";
 				numFailed++;
 				//document.querySelector("#pass").style.borderColor = "#ff0033";
 				//document.querySelector("#username").style.borderColor = "#ff0033";
-				if(pass.length < 8){
+				if (pass.length < 8) {
 					document.getElementById("errormessage").innerHTML = "Username cannot be empty and password must be at least 8 characters";
-					
-				}
-				else{
+				} else {
 					document.getElementById("errormessage").innerHTML = "Username cannot be empty.";
 				}
 				//document.querySelector(".login").style.height = "350px";
-			}
-			else if(pass.length < 8){
+			} else if(pass.length < 8){
 				//document.body.id = "errorScreen";
 				numFailed++;
 				//document.querySelector("#pass").style.borderColor = "#ff0033";
