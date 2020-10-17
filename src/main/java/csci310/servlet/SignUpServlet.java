@@ -41,13 +41,11 @@ public class SignUpServlet extends HttpServlet {
 			boolean result = db.createUser(username, hashedPassword);
 			System.out.println(result);
 			
-			// New user created successfully
-			if(result) {
-				session.setAttribute("signup", true);
-			} else {
-				// Sign up unsuccessful because username already exists in the database.
-				session.setAttribute("signup", false);
-			}
+			// Result indicates whether user was successfully created or not.
+			// A failed sign up means the username is already taken.
+			session.setAttribute("signup", result);
+			
+			
 			try {
 				PrintWriter pw = response.getWriter();
 				pw.write("" + result);
