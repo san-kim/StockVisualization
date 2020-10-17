@@ -282,9 +282,7 @@ public class DatabaseClient {
 	{
 		try {
 			String deleteUserCommand = "DELETE FROM User WHERE username=?";
-			System.out.println(deleteUserCommand);
 			PreparedStatement dps = connection.prepareStatement(deleteUserCommand);
-			System.out.println(dps);
 			dps.setString(1, username);
 			dps.executeUpdate();
 		} catch (SQLException e) {
