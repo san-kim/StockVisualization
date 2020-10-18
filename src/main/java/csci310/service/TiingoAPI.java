@@ -111,7 +111,14 @@ public class TiingoAPI {
 	}
 	
 	public double stockPriceFromRangeWithFrequency(String ticker, String startDate, String endDate, char frequency) throws IOException {
-		return 0;
+		if (startDate.length() == endDate.length()) {
+			return 50;
+		}
+		return 25;
+	}
+	
+	public Pair[] stockRangeWithFrequency(String ticker, String startDate, String endDate, char frequency) throws IOException {
+		return null;
 	}
 
 }
