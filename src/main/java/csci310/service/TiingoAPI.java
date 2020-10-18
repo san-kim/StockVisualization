@@ -109,5 +109,9 @@ public class TiingoAPI {
 		//return myResponse.getDouble("close");
 		return 50;
 	}
+	
+	public double stockPriceFromRangeWithFrequency(String ticker, String startDate, String endDate, char frequency) throws IOException {
+		return 0;
+	}
 
 }

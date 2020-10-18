@@ -30,5 +30,12 @@ public class TiingoAPITest {
 		double price = stock.stockPriceFromRange("AMZN", "2012-1-1", "2012-1-15");
 		assertTrue(price > 25);
 	}
+	
+	@Test
+	public void testStockPriceFromRangeWithFrequency() throws IOException {
+		TiingoAPI stock = new TiingoAPI();
+		double price = stock.stockPriceFromRangeWithFrequency("AMZN", "2012-1-1", "2012-1-15", 'W');
+		assertTrue(price > 50);
+	}
 
 }
