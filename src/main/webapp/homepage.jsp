@@ -402,28 +402,28 @@
 	    					<div class="modal-box">
 	    						<div class="popup-header">Add Stock</div>
 	    						<div class="popup-section">
-	    							<form id="add-stock-form">
+	    							<form id="add-stock-form" action="/AddServlet" method="post" >
 	    								<div class="form-row">
 	    									<label for="ticker">Stock Ticker</label>
-	    									<input type="text" id="ticker">
+	    									<input type="text" name= "ticker" id="ticker">
 	    								</div>
 	    								<div class="form-row">
 	    									<label for="ticker"># of Shares</label>
-	    									<input type="number" id="shares">
+	    									<input type="number" name="shares" id="shares">
 	    								</div>
 	    								<div class="form-row">
 	    									<label for="date-purchased">Date Purchased</label>
-	    									<input type="date" id="date-purchased" placeholder="yyyy-mm-dd">
+	    									<input type="date" name="date-purchased" id="date-purchased" placeholder="yyyy-mm-dd">
 	    								</div>
 	    								<div class="form-row">
 	    									<label for="date-sold">Date Sold</label>
-	    									<input type="date" id="date-sold" placeholder="yyyy-mm-dd">
+	    									<input type="date" name="date-sold" id="date-sold" placeholder="yyyy-mm-dd">
 	    								</div>
 	    								<div class="form-row">
 	    									<span class="error-msg">Test error message</span>
 	    								</div>
 
-	    								<button type="submit" class="button" id="add-stock-submit">Add Stock</button>
+	    								<button type="submit" class="button" name="add-stock-submit" id="add-stock-submit">Add Stock</button>
 	    							</form>
 	    						</div>
 	    						<div class="popup-section">
@@ -597,7 +597,10 @@
 			console.log(document.getElementById("date-sold").value);
 			//error checking to be done 
 
-			
+			/*var xhttp0 = new XMLHttpRequest();
+			xhttp0.open("POST", "AddServlet", false);
+			xhttp0.send();
+			console.log("Hello");*/
 			//addStockModal.style.display = "none";
 		}
 		// When user cancels adding a stock
