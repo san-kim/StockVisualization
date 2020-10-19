@@ -16,6 +16,10 @@
   	<servlet-name>SignupServlet</servlet-name>
   	<servlet-class>csci310.servlet.SignupServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>GetUserStocksServlet</servlet-name>
+  	<servlet-class>csci310.servlet.GetUserStocksServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   <servlet-name>login</servlet-name>
   <url-pattern>/api/login</url-pattern>
@@ -27,5 +31,9 @@
   <servlet-mapping>
   	<servlet-name>SignupServlet</servlet-name>
   	<url-pattern>/SignupServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>GetUserStocksServlet</servlet-name>
+  	<url-pattern>/GetUserStocksServlet</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -27,6 +27,86 @@
 			xhttp1.open("POST", "HomeServlet?logout=" + "true", false);
 			xhttp1.send();
 	    }
+		
+		//stocks in portfolio, not viewed
+		function getUserPortfolioStocks()
+		{
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("POST", "GetUserStocksServlet?getportfolio=true", false);
+			xhttp.send();
+			
+			//array of everything results -- name, ticker, quantity, boughtdate, selldate, color
+			var response = xhttp.responseText.trim();
+			var result = response.split(",");
+			
+			var namearray = [];
+			var tickerarray = [];
+			var quantityarray = [];
+			var buydatearray = [];
+			var selldatearray = [];
+			var colorarray = [];
+			
+			
+			var i;
+			for(i = 0; i < result.length; i += 6)
+			{
+				namearray.push(result[i]);
+				tickerarray.push(result[i+1]);
+				quantityarray.push(result[i+2]);
+				buydatearray.push(result[i+3]);
+				selldatearray.push(result[i+4]);
+				colorarray.push(result[i+5]); 
+			}
+			
+			
+			//TODO: do what you want with these arrays
+			alert(namearray);
+			alert(tickerarray);
+			alert(quantityarray);
+			alert(buydatearray);
+			alert(selldatearray);
+			alert(colorarray);
+		}
+		
+		//stocks in viewed, not portfolio
+		function getUserViewedStocks()
+		{
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("POST", "GetUserStocksServlet?getviewed=true", false);
+			xhttp.send();
+			
+			//array of everything results -- name, ticker, quantity, boughtdate, selldate, color
+			var response = xhttp.responseText.trim();
+			var result = response.split(",");
+			
+			var namearray = [];
+			var tickerarray = [];
+			var quantityarray = [];
+			var buydatearray = [];
+			var selldatearray = [];
+			var colorarray = [];
+			
+			
+			var i;
+			for(i = 0; i < result.length; i += 6)
+			{
+				namearray.push(result[i]);
+				tickerarray.push(result[i+1]);
+				quantityarray.push(result[i+2]);
+				buydatearray.push(result[i+3]);
+				selldatearray.push(result[i+4]);
+				colorarray.push(result[i+5]); 
+			}
+			
+			
+			//TODO: do what you want with these arrays
+			alert(namearray);
+			alert(tickerarray);
+			alert(quantityarray);
+			alert(buydatearray);
+			alert(selldatearray);
+			alert(colorarray);
+		}
 	</script>
 
 	<script>		

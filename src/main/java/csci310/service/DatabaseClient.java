@@ -292,6 +292,34 @@ public class DatabaseClient {
 		return true;
 	}
 	
+	public boolean deleteUserPortfolio(int userID)
+	{
+		try {
+			String deleteUserCommand = "DELETE FROM Portfolio WHERE userID=?";
+			PreparedStatement dps = connection.prepareStatement(deleteUserCommand);
+			dps.setInt(1, userID);
+			dps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean deleteUserViewed(int userID)
+	{
+		try {
+			String deleteUserCommand = "DELETE FROM ViewedStocks WHERE userID=?";
+			PreparedStatement dps = connection.prepareStatement(deleteUserCommand);
+			dps.setInt(1, userID);
+			dps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
 	public boolean clearDatabase() {
 		try {
 			String clearUserCommand = "DELETE FROM 'User'";
