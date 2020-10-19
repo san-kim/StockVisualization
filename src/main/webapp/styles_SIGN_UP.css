@@ -102,36 +102,42 @@ body
 {
 	#errormessage
 	{
-		margin-top: 80vh !important;
-		width: 40vw !important;
+		margin-top: 70vh !important;
+		width: 100vw !important;
 		font-size: 10px !important;
-		margin-left: 10vw;
+		margin-left: 0vw;
+		text-align:center;
 	}
 	
 	#signdiv
 	{
-		margin-left:10vw;
+		margin-left:15vw;
 		margin-top:10vh;
-		height: 70vh;
-		width: 40vw;
+		height: 60vh;
+		width: 70vw;
 	}
 	
 	#signdiv p{
 		margin-bottom: 0;
 		font-size:20px;
 	}
-	
+	.inputbar
+	{
+		width: 53vw !important;
+	}
 	#logindiv
 	{
-		margin-top: 35vh !important;
+		margin-top: 75vh !important;
 		position:absolute;
-		margin-left: 24vw;
+		margin-left: calc(50vw - px);
 	}
 	
 	#registerbutton
 	{
 		height:30px !important;
 		font-size:20px !important;
+		width: 160px !important;
+		margin-left: calc(50% - 80px) !important;
 	}
 	#loginbutton
 	{
@@ -150,6 +156,22 @@ body
 	}
 }
 
+@media only screen and (max-height: 700px)
+{
+	#signdiv
+	{
+		height: 65vh;
+	}
+	#errormessage
+	{
+		margin-top: 75vh !important;
+		width: 100vw !important;
+		font-size: 10px !important;
+		margin-left: 0vw;
+		text-align:center;
+	}
+}
+
 @media only screen and (max-height: 610px)
 {
 	#signdiv #registerp
@@ -160,10 +182,10 @@ body
 	}
 	#signdiv
 	{
-		margin-left:10vw;
+		margin-left:15vw !important;
 		margin-top:10vh;
-		height: 70vh;
-		width: 40vw;
+		height: 60vh;
+		width: 70vw;
 	}
 	#signdiv form
 	{
@@ -172,8 +194,8 @@ body
 	#registerbutton
 	{
 		margin-top: -10px !important;
-		width: 100px !important;
-		margin-left: calc(50% - 50px) !important;
+		width: 150px !important;
+		margin-left: calc(50% - 75px) !important;
 	}
 	#loginbutton
 	{
@@ -183,9 +205,10 @@ body
 	#errormessage
 	{
 		position:absolute;
-		margin-left: 50vw;
-		margin-top: 10vh !important;
-		width: 50vw !important;
+		margin-left: 0vw;
+		margin-top: 72vh !important;
+		width: 100vw !important;
+		text-align:center;
 	}
 	#background
 	{
@@ -230,8 +253,12 @@ body
 	}
 }
 
-@media only screen and (max-height: 350px)
+@media only screen and (max-height: 500px)
 {
+	#signdiv
+	{
+		margin-top: 20px !Important;
+	}
 
 	#register_p_div #registerp
 	{
@@ -241,11 +268,14 @@ body
 	#usernametext, #passwordtext, #confirmpasswordtext, #registerbutton 
 	{
 		font-size: 15px !important;
+		width: 200px;
 	}
 	#registerbutton
 	{
 		margin-top: 12px !important;
 		height: 25px !important;
+		width: 150px !important;
+		margin-left: calc(50% - 75px) !important;
 	}
 	#placeholder
 	{
@@ -254,6 +284,68 @@ body
 	#usernametext
 	{
 		margin-top: 100px !important;
+	}
+	#loginbutton
+	{
+		height: 25px !important;
+		font-size: 15px !important;
+	}
+	#logindiv
+	{
+		margin-top: 70vh !important;
+	}
+	#errormessage
+	{
+		margin-top: 65vh !important;
+	}
+} 
+
+@media only screen and (max-height: 400px)
+{
+	#signdiv
+	{
+		margin-top: 10px !Important;
+	}
+
+	#register_p_div #registerp
+	{
+		font-size: 18px !important;
+		margin-left: -35px !important; 
+	}
+	#usernametext, #passwordtext, #confirmpasswordtext, #registerbutton 
+	{
+		font-size: 13px !important;
+		width: 200px;
+	}
+	#registerbutton
+	{
+		margin-top: 12px !important;
+		height: 20px !important;
+		width: 150px !important;
+		margin-left: calc(50% - 75px) !important;
+		font-size: 13px !important;
+	}
+	#placeholder
+	{
+		height: 0px!important;
+	}
+	#usernametext
+	{
+		margin-top: 100px !important;
+	}
+	#loginbutton
+	{
+		height: 20px !important;
+		font-size: 13px !important;
+	}
+	#logindiv
+	{
+		margin-top: 68vh !important;
+	}
+	#errormessage
+	{
+		margin-top: 68vh !important;
+		font-size: 13px !important;
 	}
 } 
 
@@ -284,7 +376,8 @@ body
 	}
 	#registerbutton
 	{
-		margin-left: calc(35vw - 80px) !important;
+		margin-left: calc(35vw - 110px) !important;
+		width: 220px;
 	}
 }
 
@@ -330,9 +423,9 @@ body
 
 #registerbutton
 {
-	margin-left: calc(20vw - 80px);
+	margin-left: calc(20vw - 110px);
 	margin-top: -4px;
-	width: 160px;
+	width: 220px;
 	height: 45px;
 	border-radius:22px;
 	background-color:#a1d5ea;
@@ -347,9 +440,9 @@ body
 
 #registerbutton:hover
 {
-	margin-left: calc(20vw - 80px);
+	margin-left: calc(20vw - 110px);
 	margin-top: -4px;
-	width: 160px;
+	width: 220px;
 	height: 45px;
 	border-radius:22px;
 	background-color:#aedbed;
@@ -362,9 +455,9 @@ body
 
 #registerbutton:active
 {
-	margin-left: calc(20vw - 80px);
+	margin-left: calc(20vw - 110px);
 	margin-top: -4px;
-	width: 160px;
+	width: 220px;
 	height: 45px;
 	border-radius:22px;
 	background-color: #86c9e4;

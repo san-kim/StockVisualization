@@ -55,6 +55,7 @@ public class LoginServlet extends HttpServlet {
 			else if(result >= 1) {
 				session.setAttribute("login", true);
 				session.setAttribute("loginID", uname);
+				session.setAttribute("userID", result);
 				currentUser = new User(uname, result);
 				CurrentSignedInUser.getInstance().signInCurrentUser(currentUser);
 			}

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles_SIGN_UP.css">
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="jparticle.jquery.min.js"></script>
 <title>Sign Up</title>
@@ -53,7 +53,7 @@
 				<p id="confirmpasswordtext" class="formobj">Confirm Password</p>
 				<input type="password" name="confirmpassword" id="confirmpassword" class="inputbar">
 				<p id="placeholder"><br></p>
- 				<input type="submit" name="submit" value="sign up" id="registerbutton" class="formobj">
+ 				<input type="submit" name="submit" value="create account" id="registerbutton" class="formobj">
 			</form>
 		</div>
 		
@@ -62,8 +62,8 @@
 		</div>
 		
 		<div id="logindiv">
-			<p id="loginp">Already have an account?</p>
-			<button id="loginbutton" onclick="location.href='signIn.jsp'">login</button>
+			<p id="loginp"></p>
+			<button id="loginbutton" onclick="location.href='signIn.jsp'">cancel</button>
 		</div>
 		
 		
