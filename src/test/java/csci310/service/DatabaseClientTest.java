@@ -267,11 +267,6 @@ public class DatabaseClientTest extends Mockito {
 	public void testDeleteUserThrowsException() throws SQLException {
 		db.createUser("randomtest1234", "asdfasdfasdf123");
 		try {
-//			Connection mockConn = mock(Connection.class);
-//			mockDb.setConnection(mockConn);
-//			when(mockConn.createStatement()).thenThrow(new SQLException());
-//			
-//			
 			Connection mockConn = mock(Connection.class);
 			mockDb.setConnection(mockConn);
 			String query = "DELETE FROM User WHERE username=?";
@@ -283,7 +278,75 @@ public class DatabaseClientTest extends Mockito {
 		}
 		DatabaseClient db_temp = new DatabaseClient();
 		db_temp.deleteUser("randomtest1234");
-		//assertTrue(true);
+		assertTrue(true);
+	}
+	
+	@Test
+	public void testDeleteUserPortfolio() throws NoSuchAlgorithmException, SQLException {
+		//setup stuff
+		DatabaseClient db = new DatabaseClient();
+		db.deleteUser("test2");
+		PasswordAuthentication pa = new PasswordAuthentication(); 
+		String hashedPass = pa.hash("test2test", null, null);
+		db.createUser("test2", hashedPass);
+		int userID = db.getUser(pa, "test2", "test2test");
+		Stock stock1 = new Stock("Apple","APPL",20, 100000, 2000000);
+		Stock stock2 = new Stock("Google","GOOGL",30, 100000, 2000000);
+		Stock stock3 = new Stock("Microsoft","M",40, 100000, 2000000);
+		db.addStockToPortfolio(userID, stock1);
+		db.addStockToPortfolio(userID, stock2);
+		db.addStockToPortfolio(userID, stock3);
+		
+		assertTrue(db.deleteUserPortfolio(userID));
+
+		try {
+			Connection mockConn = mock(Connection.class);
+			mockDb.setConnection(mockConn);
+			String query = "DELETE FROM Portfolio WHERE userID=?";
+			when(mockConn.prepareStatement(query)).thenThrow(new SQLException());
+			assertTrue(mockDb.deleteUserPortfolio(userID) == false);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DatabaseClient db_temp = new DatabaseClient();
+		db_temp.deleteUserPortfolio(userID);
+		db_temp.deleteUserViewed(userID);
+		db_temp.deleteUser("test2");
+		assertTrue(true);
+	}
+	
+	@Test
+	public void testDeleteUserViewed() throws SQLException, NoSuchAlgorithmException {
+		DatabaseClient db = new DatabaseClient();
+		db.deleteUser("test2");
+		PasswordAuthentication pa = new PasswordAuthentication(); 
+		String hashedPass = pa.hash("test2test", null, null);
+		db.createUser("test2", hashedPass);
+		int userID = db.getUser(pa, "test2", "test2test");
+		Stock stock1 = new Stock("Apple","APPL",20, 100000, 2000000);
+		Stock stock2 = new Stock("Google","GOOGL",30, 100000, 2000000);
+		Stock stock3 = new Stock("Microsoft","M",40, 100000, 2000000);
+		db.addStockToViewed(userID, stock1);
+		db.addStockToViewed(userID, stock2);
+		db.addStockToViewed(userID, stock3);
+
+		try {
+			Connection mockConn = mock(Connection.class);
+			mockDb.setConnection(mockConn);
+			String query = "DELETE FROM ViewedStocks WHERE userID=?";
+			when(mockConn.prepareStatement(query)).thenThrow(new SQLException());
+			assertTrue(mockDb.deleteUserViewed(userID) == false);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		//cleanup
+		DatabaseClient db_temp = new DatabaseClient();
+		db_temp.deleteUserPortfolio(userID);
+		db_temp.deleteUserViewed(userID);
+		db_temp.deleteUser("test2");
+		assertTrue(true);
 	}
 	
 	@Test
