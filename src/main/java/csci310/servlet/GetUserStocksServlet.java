@@ -67,9 +67,6 @@ public class GetUserStocksServlet extends HttpServlet {
 				}
 				responsetext = responsetext.substring(0, responsetext.length()-1);
 				
-				System.out.println("RESPONSETEXT 1:");
-				System.out.println(responsetext);
-				
 				PrintWriter out = response.getWriter();
 				out.println(responsetext);
 				return;
@@ -91,9 +88,6 @@ public class GetUserStocksServlet extends HttpServlet {
 					responsetext += viewedStocks.get(i).getColor() + ",";
 				}
 				responsetext = responsetext.substring(0, responsetext.length()-1);
-				
-				System.out.println("RESPONSETEXT 2:");
-				System.out.println(responsetext);
 				
 				PrintWriter out = response.getWriter();
 				out.println(responsetext);
