@@ -445,6 +445,34 @@
 					});
 
 
+					// Error codes for adding a viewed stock
+					$('#view-stock-submit').click(function(){
+						if($("#add-stock-shares").val() > 0){
+							$("#view-stock-form").submit();
+						}else{
+							$("#view-stock-error").html("Error, invalid ticker");
+						}
+					});
+
+					// Error codes for adding a stock
+					$('#add-stock-submit').click(function(){
+						if($("#add-stock-shares").val() > 0){
+							$("#add-stock-form").submit();
+						}else{
+							$("#add-stock-error").html("Error, invalid ticker");
+						}
+					});
+
+					// Error codes for uploading the csv
+					$('#import-stock-submit').click(function(){
+				    $("#import-stock-error").html("Error, invalid ticker");
+						$("#import-stock-form").submit();
+					});
+
+
+
+
+
 
 
 
@@ -475,26 +503,25 @@
 	    							<form id="add-stock-form">
 	    								<div class="form-row">
 	    									<label for="ticker">Stock Ticker</label>
-	    									<input type="text" id="ticker">
+	    									<input type="text" id="add-stock-ticker">
 	    								</div>
 	    								<div class="form-row">
 	    									<label for="ticker"># of Shares</label>
-	    									<input type="number" id="shares">
+	    									<input type="number" id="add-stock-shares">
 	    								</div>
 	    								<div class="form-row">
 	    									<label for="date-purchased">Date Purchased</label>
-	    									<input type="date" id="date-purchased" placeholder="yyyy-mm-dd">
+	    									<input type="date" id="add-stock-date-purchased" placeholder="yyyy-mm-dd">
 	    								</div>
 	    								<div class="form-row">
 	    									<label for="date-sold">Date Sold</label>
-	    									<input type="date" id="date-sold" placeholder="yyyy-mm-dd">
+	    									<input type="date" id="add-stock-date-sold" placeholder="yyyy-mm-dd">
 	    								</div>
 	    								<div class="form-row">
-	    									<span class="error-msg">Test error message</span>
+	    									<span id="add-stock-error" class="error-msg"></span>
 	    								</div>
-
-	    								<button type="submit" class="button" id="add-stock-submit">Add Stock</button>
 	    							</form>
+										<button type="submit" class="button" id="add-stock-submit">Add Stock</button>
 	    						</div>
 	    						<div class="popup-section">
 	    							<button class="button" id="add-stock-cancel">Cancel</button>
@@ -513,7 +540,7 @@
 	    									<input type="file" id="csvImport" accept=".csv">
 	    								</div>
 	    								<div class="form-row">
-	    									<span class="error-msg">Test error message</span>
+	    									<span class="error-msg" id="import-stock-error"></span>
 	    								</div>
 	    								<button type="submit" class="button" id="import-stock-submit">Import Stocks</button>
 	    							</form>
@@ -576,25 +603,26 @@
 	    							<form id="view-stock-form">
 	    								<div class="form-row">
 	    									<label for="ticker">Stock Ticker</label>
-	    									<input type="text" id="ticker-two">
+	    									<input type="text" id="view-stock-ticker">
 	    								</div>
 	    								<div class="form-row">
 	    									<label for="ticker"># of Shares</label>
-	    									<input type="number" id="shares-two">
+	    									<input type="number" id="view-stock-shares">
 	    								</div>
 	    								<div class="form-row">
 	    									<label for="date-purchased">Date Purchased</label>
-	    									<input type="date" id="date-purchased-two" placeholder="yyyy-mm-dd">
+	    									<input type="date" id="view-stock-date-purchased" placeholder="yyyy-mm-dd">
 	    								</div>
 	    								<div class="form-row">
 	    									<label for="date-sold">Date Sold</label>
-	    									<input type="date" id="date-sold-two" placeholder="yyyy-mm-dd">
+	    									<input type="date" id="view-stock-date-sold" placeholder="yyyy-mm-dd">
 	    								</div>
 	    								<div class="form-row">
-	    									<span class="error-msg">Test error message</span>
+	    									<span class="error-msg" id="view-stock-error"></span>
 	    								</div>
-	    								<button type="submit" class="button" id="view-stock-submit">View Stock</button>
+
 	    							</form>
+										<button type="submit" class="button" id="view-stock-submit">View Stock</button>
 	    						</div>
 	    						<div class="popup-section">
 	    							<button class="button" id="view-stock-cancel">Cancel</button>
